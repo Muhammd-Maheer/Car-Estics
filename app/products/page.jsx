@@ -1,11 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, Menu, X, ArrowRight, Package, Layers, Shirt, Box, ShieldCheck, Sparkles, FileImage, Palette, Upload, Check } from "lucide-react";
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation'; 
 import CartOverlay from '../../components/CartOverlay'
+
+// Wrap next/image with Framer Motion so it keeps its animation props (whileHover, transition, etc.)
+const MotionImage = motion(Image);
 
 const categories = ['All', 'split posters', '3d posters', 'car cubes'];
 
@@ -31,6 +35,9 @@ export default function ProductsPage() {
   
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+
+  // Keep track of the current blob URL so we can revoke it and avoid memory leaks
+  const sketchPreviewRef = useRef(null);
 
   const filteredProducts = activeCategory === 'All' 
     ? products 
@@ -101,6 +108,15 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
+  // Clean up any outstanding blob URL when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (sketchPreviewRef.current) {
+        URL.revokeObjectURL(sketchPreviewRef.current);
+      }
+    };
+  }, []);
+
 
   // Sketch Pricing Logic
   const getSketchPrice = () => {
@@ -113,8 +129,22 @@ export default function ProductsPage() {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSketchPreview(URL.createObjectURL(file));
+      // Revoke the previous blob URL before creating a new one to avoid leaking memory
+      if (sketchPreviewRef.current) {
+        URL.revokeObjectURL(sketchPreviewRef.current);
+      }
+      const url = URL.createObjectURL(file);
+      sketchPreviewRef.current = url;
+      setSketchPreview(url);
     }
+  };
+
+  const handleRemoveSketchPreview = () => {
+    if (sketchPreviewRef.current) {
+      URL.revokeObjectURL(sketchPreviewRef.current);
+      sketchPreviewRef.current = null;
+    }
+    setSketchPreview(null);
   };
 
   const handleSketchWhatsAppOrder = () => {
@@ -257,14 +287,23 @@ export default function ProductsPage() {
                 <div className="flex-1 min-h-[250px] relative rounded-2xl border-2 border-dashed border-studio-700 hover:border-amber-500/50 bg-studio-950/50 flex flex-col items-center justify-center overflow-hidden transition-all group">
                   {sketchPreview ? (
                     <>
-                      <img src={sketchPreview} alt="Preview" className="w-full h-full object-cover opacity-90 group-hover:opacity-50 transition-opacity" />
+                      {/* User-uploaded blob: URL — Next's optimizer can't process these,
+                          so we render it via next/image with `unoptimized` to skip the
+                          optimization pipeline while keeping a consistent API. */}
+                      <Image
+                        src={sketchPreview}
+                        alt="Preview"
+                        fill
+                        unoptimized
+                        className="object-cover opacity-90 group-hover:opacity-50 transition-opacity"
+                      />
                       <button 
-                        onClick={() => setSketchPreview(null)}
-                        className="absolute top-4 right-4 bg-black/60 text-white p-2 rounded-full hover:bg-red-500 transition-colors backdrop-blur-md"
+                        onClick={handleRemoveSketchPreview}
+                        className="absolute top-4 right-4 bg-black/60 text-white p-2 rounded-full hover:bg-red-500 transition-colors backdrop-blur-md z-10"
                       >
                         <X size={16} />
                       </button>
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10">
                         <span className="bg-black/80 text-white text-xs px-4 py-2 rounded-full font-medium tracking-wider">Click to Change Image</span>
                       </div>
                     </>
@@ -281,7 +320,7 @@ export default function ProductsPage() {
                     type="file" 
                     accept="image/*" 
                     onChange={handleImageUpload} 
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                   />
                 </div>
               </div>
@@ -412,7 +451,7 @@ export default function ProductsPage() {
              </div>
           ) : (
             <AnimatePresence>
-              {filteredProducts.map((product) => (
+              {filteredProducts.map((product, index) => (
                 <motion.div
                   key={product._id || product.id}
                   onClick={() => setSelectedProduct(product)}
@@ -426,12 +465,17 @@ export default function ProductsPage() {
                 >
                   {/* Adjusted heights for mobile and large screens */}
                   <div className="relative w-full h-40 sm:h-64 lg:h-[20rem] overflow-hidden bg-studio-950">
-                    <motion.img 
+                    <MotionImage
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.2, ease: "easeOut" }}
-                      src={product.image} 
+                      src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500"
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      // First few products are likely above the fold — load them eagerly,
+                      // let the rest lazy-load as the user scrolls.
+                      priority={index < 6}
+                      className="object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-studio-950 via-studio-900/20 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500" />
                     
@@ -498,10 +542,13 @@ export default function ProductsPage() {
 
               {/* Left Side: Product Image */}
               <div className="lg:w-1/2 relative h-[250px] sm:h-[350px] lg:h-auto lg:min-h-[500px] bg-studio-950 shrink-0">
-                <img 
-                  src={selectedProduct.image} 
+                <Image
+                  src={selectedProduct.image}
                   alt={selectedProduct.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-studio-950/90 via-transparent to-transparent lg:hidden" />
               </div>
