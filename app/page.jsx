@@ -8,8 +8,8 @@ import CartOverlay from '../components/CartOverlay'
 
 import Image from 'next/image';
 
-
-
+// Create a motion-enabled version of the Next Image component
+const MotionImage = motion(Image);
 
 // Replace these with your actual long/narrow poster image paths
 const posterImages = [
@@ -18,6 +18,7 @@ const posterImages = [
   'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=400&q=80',
   'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=400&q=80',
 ];
+
 // --- DUMMY DATA ---
 const categories = [
   { name: "3d Posters", desc: "A3 & A4 Museum Quality", icon: Layers, color: "bg-blue-50" },
@@ -69,7 +70,6 @@ const images = [
   '/hero/hero-p2.png',
   '/hero/hero-p5.png',
   '/hero/hero-p4.png',
-
 ];
 
 // Framer Motion variants for the sliding animation
@@ -239,7 +239,7 @@ export default function Home() {
 
         <div className="relative w-[50%] h-[300px] overflow-hidden bg-black flex items-center justify-center">
           <AnimatePresence initial={false}>
-            <motion.img
+            <MotionImage
               key={currentIndex}
               src={images[currentIndex]}
               alt={`Hero slide ${currentIndex + 1}`}
@@ -247,7 +247,8 @@ export default function Home() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="absolute w-full h-full object-contain"
+              fill
+              className="object-contain"
               style={{
                 maskImage: `
           linear-gradient(to right, transparent, black 15%, black 85%, transparent),
@@ -262,18 +263,6 @@ export default function Home() {
               }}
             />
           </AnimatePresence>
-
-          {/* Slide Indicators (Dots) */}
-          {/* <div className="absolute bottom-4 flex gap-2 z-10">
-    {images.map((_, index) => (
-      <div
-        key={index}
-        className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-          index === currentIndex ? 'bg-white' : 'bg-white/50'
-        }`}
-      />
-    ))}
-  </div> */}
         </div>
 
 
@@ -282,9 +271,6 @@ export default function Home() {
           <Link href="/products" className="w-32 sm:w-48 text-center py-3 sm:py-4 rounded-full bg-white text-black cursor-pointer">
             Shop now
           </Link>
-          {/* <Link href="/products" className="w-28 sm:w-36 text-center py-3 sm:py-4 rounded-full border-2 border-white text-white hover:bg-[#191970] hover:text-white hover:border-[#191970] transition-colors duration-300 cursor-pointer">
-            Bundle
-          </Link> */}
         </div>
 
       </section>
@@ -314,10 +300,11 @@ export default function Home() {
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-slate-200 mb-4">
-                  <img
+                  <Image
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                   <div className="absolute bottom-4 left-0 w-full px-4 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
@@ -338,8 +325,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-
 
 
       {/* CATEGORIES GRID */}
@@ -417,10 +402,12 @@ export default function Home() {
                 {/* TOP ROW: THUMBNAILS */}
                 <div className="flex flex-row gap-3 w-full overflow-x-auto hide-scrollbar shrink-0 pb-1">
                   {imageData.map((img) => (
-                    <img
+                    <Image
                       key={img.id}
                       src={img.thumb}
                       alt={`Thumbnail ${img.id}`}
+                      width={80}
+                      height={80}
                       onClick={() => setActiveId(img.id)}
                       // I've added a cursor-pointer and dynamic borders/opacity so the active thumbnail stands out
                       className={`h-16 w-16 sm:h-20 sm:w-20 shrink-0 aspect-square object-cover rounded-md cursor-pointer transition-all duration-200 ${activeId === img.id
@@ -432,15 +419,17 @@ export default function Home() {
                 </div>
 
                 {/* BOTTOM: MAIN IMAGE */}
-                <div className="w-full rounded-lg overflow-hidden border border-white/10 bg-zinc-900/50 flex items-center justify-center">
+                <div className="w-full rounded-lg overflow-hidden border border-white/10 bg-zinc-900/50 flex items-center justify-center relative">
                   {/* Framer motion on the image itself adds a nice crossfade effect when switching */}
-                  <motion.img
+                  <MotionImage
                     key={currentHero} // The key forces React to re-mount the image, triggering the animation
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                     src={currentHero}
                     alt="Custom aesthetic wallpaper preview"
+                    width={1000}
+                    height={1000}
                     className="w-full h-auto object-contain mx-auto"
                   />
                 </div>
@@ -459,10 +448,14 @@ export default function Home() {
         Pencilled / Noise Texture Overlay 
         Replace the background image URL with your actual texture asset.
       */}
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
-          style={{ backgroundImage: "url('/textures/pencil-noise.png')", backgroundSize: 'cover' }}
-        ></div>
+        <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
+          <Image
+            src="/textures/pencil-noise.png"
+            alt="Pencil Noise Texture"
+            fill
+            className="object-cover"
+          />
+        </div>
 
         {/* Minimal Container */}
         <div className="relative max-w-6xl mx-auto bg-zinc-900/40 backdrop-blur-md p-8 sm:p-14 text-zinc-200 border border-zinc-800/60 shadow-2xl">
@@ -470,12 +463,13 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
             {/* Hand-Drawn Image Container */}
-            <div className="w-full rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900 relative group">
+            <div className="w-full h-80 sm:h-[480px] rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900 relative group">
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-              <img
+              <Image
                 src="/drawings/hero-p1.PNG"
                 alt="Custom hand drawn portrait example"
-                className="w-full h-80 sm:h-[480px] object-cover object-center grayscale-[20%] contrast-125 transition-transform duration-700 group-hover:scale-105"
+                fill
+                className="object-cover object-center grayscale-[20%] contrast-125 transition-transform duration-700 group-hover:scale-105"
               />
 
               {/* Optional: Small label indicating it's a sample */}
@@ -535,9 +529,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-
-
 
 
       <footer className="bg-neutral-950 text-neutral-400 pt-20 pb-10 border-t border-neutral-800">
