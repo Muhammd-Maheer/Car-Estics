@@ -69,7 +69,8 @@ export default function CartOverlay({ isOpen, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full z-[110] bg-studio-950 border-l border-studio-800 flex flex-col w-full md:w-[40vw] xl:w-[35vw] shadow-2xl overflow-hidden"
+
+            className="fixed top-0 right-0 h-full z-[110] bg-studio-950 text-white border-l border-studio-800 flex flex-col w-full md:w-[40vw] xl:w-[35vw] shadow-2xl overflow-hidden"
           >
             {/* Header */}
             <div className="px-6 py-5 border-b border-studio-800 flex items-center justify-between bg-studio-950/80 backdrop-blur-md">
@@ -93,13 +94,13 @@ export default function CartOverlay({ isOpen, onClose }) {
               {cartItems.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-60">
                   <ShoppingBag size={64} className="text-studio-100/30 mb-2" />
-                  <p className="text-lg tracking-widest uppercase font-medium">Your cart is empty</p>
+                  <p className="text-lg tracking-widest uppercase font-medium text-white">Your cart is empty</p>
                   <p className="text-xs text-studio-100/60 max-w-[250px]">
                     Looks like you haven't added any automotive art to your collection yet.
                   </p>
                   <button 
                     onClick={onClose}
-                    className="mt-4 px-6 py-3 rounded-full border border-studio-800 hover:border-amber-500 hover:text-amber-400 text-xs uppercase tracking-widest font-bold transition-all duration-200"
+                    className="mt-4 px-6 py-3 rounded-full border border-studio-800 hover:border-amber-500 hover:text-amber-400 text-white text-xs uppercase tracking-widest font-bold transition-all duration-200"
                   >
                     Continue Shopping
                   </button>

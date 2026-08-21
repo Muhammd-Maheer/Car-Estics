@@ -259,113 +259,49 @@ export default function ProductsPage() {
       <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-studio-900/20 rounded-full blur-[150px] z-0 pointer-events-none" />
 
       {/* NAVBAR */}
-      <nav className="fixed top-7 w-full z-50 transition-all duration-300">
-        <div className="max-w-5xl mx-auto px-6 py-3 flex items-center backdrop-blur-md justify-between border border-slate-200/50 bg-slate-400/20 rounded-full">
-
+      <nav className="fixed top-4 sm:top-7 w-full z-50  transition-all duration-300">
+        <div className="max-w-5xl mx-auto px-3  py-2 sm:py-3 flex items-center backdrop-blur-md justify-between border border-slate-200/50 bg-slate-400/20 rounded-full">
           <div className="flex items-center gap-8">
-            <Link
-              href="/"
-              className="text-2xl text-white tracking-tighter"
-            >
-              CAR
-              <span className="text-yellow-400">
-                ESTICS
-              </span>
+            <Link href="/" className="text-2xl text-white tracking-tighter">
+              CAR<span className="text-yellow-400">ESTICS</span>
             </Link>
-
             <div className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
-              <Link
-                href="/"
-                className="hover:text-indigo-600 transition-colors"
-              >
-                Home
-              </Link>
+              <Link href="/" className="hover:text-indigo-600 transition-colors">Home</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">3d Posters</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Car cubes</Link>
+              <Link href="/products" className="hover:text-indigo-600 transition-colors">Split posters</Link>
 
-              <Link
-                href="/products"
-                className="hover:text-indigo-600 transition-colors"
-              >
-                3D Posters
-              </Link>
-
-              <Link
-                href="/products"
-                className="hover:text-indigo-600 transition-colors"
-              >
-                Car Cubes
-              </Link>
-
-              <Link
-                href="/products"
-                className="hover:text-indigo-600 transition-colors"
-              >
-                Split Posters
-              </Link>
             </div>
           </div>
-
           <div className="flex items-center gap-4">
-            <button
-              className="p-2 text-slate-400 hover:text-indigo-600 transition-colors relative"
-              onClick={() =>
-                setIsCartOpen(true)
-              }
-              aria-label="Open cart"
+
+            <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors relative"
+              onClick={() => setIsCartOpen(true)}
             >
               <ShoppingBag size={20} />
-
-              <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></span>
             </button>
-
             <button
-              className="md:hidden p-2 text-slate-300"
-              onClick={() =>
-                setIsMobileMenuOpen(
-                  !isMobileMenuOpen
-                )
-              }
-              aria-label="Toggle menu"
+              className="md:hidden p-2 text-slate-600"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? (
-                <X size={24} />
-              ) : (
-                <Menu size={24} />
-              )}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              initial={{
-                opacity: 0,
-                height: 0,
-              }}
-              animate={{
-                opacity: 1,
-                height: 'auto',
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-              }}
-              className="md:hidden bg-studio-950 border-b border-studio-800 overflow-hidden"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white border-b border-slate-200 overflow-hidden"
             >
               <div className="px-4 py-6 flex flex-col gap-4">
-                {[
-                  '3D Posters',
-                  'Car Cubes',
-                  'Split Posters',
-                ].map((item) => (
-                  <Link
-                    key={item}
-                    href="/products"
-                    className="text-lg font-medium text-studio-100 border-b border-studio-800 pb-2"
-                    onClick={() =>
-                      setIsMobileMenuOpen(false)
-                    }
-                  >
+                {["Posters", "Bundles", "Apparel", "3D Signs"].map((item) => (
+                  <Link key={item} href="#" className="text-lg font-medium text-slate-800 border-b border-slate-100 pb-2">
                     {item}
                   </Link>
                 ))}
@@ -720,7 +656,7 @@ export default function ProductsPage() {
                     className="group cursor-pointer flex flex-col bg-studio-900/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-studio-800/80 hover:border-amber-500/50 transition-all duration-150"
                   >
                     {/* OPTIMIZED PRODUCT IMAGE */}
-                    <div className="relative w-full h-40 sm:h-64 lg:h-[20rem] overflow-hidden bg-studio-950">
+                    <div className="relative w-full h-40 sm:h-64 lg:h-[20rem] overflow-hidden bg-studio-950 flex items-center justify-center p-2">
 
                       {product.image ? (
                         <motion.div
@@ -742,8 +678,9 @@ export default function ProductsPage() {
                               'Car product'
                             }
                             fill
+                            quality={85}
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500"
+                            className="object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity duration-500"
                           />
                         </motion.div>
                       ) : (
@@ -859,8 +796,9 @@ export default function ProductsPage() {
                       'Selected product'
                     }
                     fill
+                    quality={90}
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover"
+                    className="object-contain p-2 lg:p-4"
                     priority
                   />
                 ) : (

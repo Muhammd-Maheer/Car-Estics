@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Set your absolute default background color here. 
+     If your site is meant to be dark, use #0a0a0a or #000000 */
+  --background: #0a0a0a; 
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -12,12 +14,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* REMOVED the @media (prefers-color-scheme: dark) block completely */
 
 body {
   background: var(--background);

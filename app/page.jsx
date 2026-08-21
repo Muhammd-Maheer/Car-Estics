@@ -66,10 +66,9 @@ const staggerContainer = {
 
 
 const images = [
-  '/hero/hero-p1.jpg',
+  '/hero/hero-p1.png',
   '/hero/hero-p2.png',
-  '/hero/hero-p5.png',
-  '/hero/hero-p4.png',
+ '/hero/hero-p3.png',
 ];
 
 // Framer Motion variants for the sliding animation
@@ -171,8 +170,8 @@ export default function Home() {
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
 
       {/* NAVBAR */}
-      <nav className="fixed top-7 w-full z-50  transition-all duration-300">
-        <div className="max-w-5xl mx-auto px-6  py-3 flex items-center backdrop-blur-md justify-between border border-slate-200/50 bg-slate-400/20 rounded-full">
+      <nav className="fixed top-4 sm:top-7 w-full z-50  transition-all duration-300">
+        <div className="max-w-5xl mx-auto px-3  py-2 sm:py-3 flex items-center backdrop-blur-md justify-between border border-slate-200/50 bg-slate-400/20 rounded-full">
           <div className="flex items-center gap-8">
             <Link href="/" className="text-2xl text-white tracking-tighter">
               CAR<span className="text-yellow-400">ESTICS</span>
@@ -224,7 +223,7 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION WITH COLLAGE HEARTBEAT BACKGROUND */}
-      <section className="relative pt-20 pb-20 lg:pt-36 lg:pb-40 overflow-hidden bg-black flex flex-col items-center justify-center min-h-[90vh]">
+      <section className="relative pt-28 m:pt-20 pb-20 lg:pt-36 lg:pb-40 overflow-hidden bg-black flex flex-col items-center justify-center min-h-[90vh]">
 
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center">
@@ -237,7 +236,7 @@ export default function Home() {
 
 
 
-        <div className="relative w-[50%] h-[300px] overflow-hidden bg-black flex items-center justify-center">
+        <div className="relative w-[50%] h-[250px] sm:h-[300px] overflow-hidden bg-black flex items-center justify-center">
           <AnimatePresence initial={false}>
             <MotionImage
               key={currentIndex}
@@ -277,7 +276,7 @@ export default function Home() {
 
 
       {/* FEATURED PRODUCTS */}
-      <section id="shop" className="py-24 bg-slate-50">
+      {/* <section id="shop" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
             <div>
@@ -324,7 +323,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       {/* CATEGORIES GRID */}
