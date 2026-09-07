@@ -913,132 +913,95 @@ export default function ProductsPage() {
         )}
       </AnimatePresence>
 
-      {/* FOOTER */}
+     
+
+     
+
       <footer className="bg-neutral-950 text-neutral-400 pt-20 pb-10 border-t border-neutral-800">
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
 
+            {/* Brand Info & Socials */}
             <div className="col-span-1 md:col-span-2">
-
-              <Link
-                href="/"
-                className="text-2xl font-black tracking-tighter mb-4 block text-white"
-              >
-                CAR
-                <span className="text-yellow-400">
-                  ESTICS
-                </span>
+              <Link href="/" className="text-2xl font-black tracking-tighter mb-4 block text-white">
+                CAR<span className="text-yellow-400">ESTICS</span>
               </Link>
-
               <p className="text-neutral-400 max-w-md mb-6">
-                Premium A3 & A4 posters,
-                custom hand-drawn sketches,
-                and automotive decor designed to
-                make your space truly yours.
+                Premium A3 & A4 posters, printed apparel, and revolutionary 3D wall signs to make your space and style truly yours.
               </p>
+
+              {/* Social Icons (Pure Inline SVGs) */}
+              <div className="flex gap-3">
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/carestics_decor"
+                   target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+
+                {/* TikTok */}
+                <a
+                  href="https://www.tiktok.com/@carestics"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="TikTok"
+                  className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-600 transition-all cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.83V7.65a7 7 0 1 0 8.84 6.78V9.39a8.16 8.16 0 0 0 4.27 1.18V7.12a4.83 4.83 0 0 1-3-0.43z" />
+                  </svg>
+                </a>
+
+               
+              </div>
             </div>
 
+            {/* Shop Links */}
             <div>
-              <h4 className="font-bold text-white mb-6">
-                Shop
-              </h4>
-
+              <h4 className="font-bold text-white mb-6">Shop</h4>
               <ul className="space-y-4 text-neutral-400">
-
-                <li>
-                  <Link
-                    href="/products"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    A4 Posters
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="/products"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    Custom Bundles
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="/products"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    Hand Drawings
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="/products"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    3D Posters
-                  </Link>
-                </li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">A4 Posters</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">Custom Bundles</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">Hand drawings</Link></li>
+                <li><Link href="/products" className="hover:text-indigo-400 transition-colors">3D Posters</Link></li>
               </ul>
             </div>
 
+            {/* Support Links */}
             <div>
-              <h4 className="font-bold text-white mb-6">
-                Support
-              </h4>
-
+              <h4 className="font-bold text-white mb-6">Support</h4>
               <ul className="space-y-4 text-neutral-400">
-
-                <li>
-                  <Link
-                    href="/shipping-and-returns"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    Shipping & Returns
-                  </Link>
-                </li>
-
-                <li>
-                  <a
-                    href={`https://wa.me/923359528726?text=${encodeURIComponent(
-                      'Hello! I need some help regarding my order.'
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    Contact Us
-                  </a>
-                </li>
+                <li><Link href="shipping-and-returns" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
+                {/* <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li> */}
+             <li>
+  <a 
+    href={`https://wa.me/923359528726?text=${encodeURIComponent("Hello! I need some help regarding my order.")}`} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="hover:text-indigo-400 transition-colors"
+  >
+    Contact Us
+  </a>
+</li>
+                {/* <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li> */}
               </ul>
             </div>
           </div>
 
+          {/* Bottom Bar */}
           <div className="border-t border-neutral-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
-
-            <p>
-              © {new Date().getFullYear()}{' '}
-              CARESTICS. All rights reserved.
-            </p>
-
+            <p>© {new Date().getFullYear()} ArtVibe. All rights reserved.</p>
             <div className="flex gap-6">
-
-              <Link
-                href="/privacy-policy"
-                className="hover:text-neutral-300 transition-colors"
-              >
-                Privacy Policy
-              </Link>
-
-              <Link
-                href="/about"
-                className="hover:text-neutral-300 transition-colors"
-              >
-                About
-              </Link>
+              <Link href="/privacy-policy" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
+              <Link href="/about" className="hover:text-neutral-300 transition-colors">About</Link>
             </div>
           </div>
         </div>

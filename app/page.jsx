@@ -530,6 +530,8 @@ export default function Home() {
       </section>
 
 
+      
+
       <footer className="bg-neutral-950 text-neutral-400 pt-20 pb-10 border-t border-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
@@ -547,8 +549,8 @@ export default function Home() {
               <div className="flex gap-3">
                 {/* Instagram */}
                 <a
-                  href="https://instagram.com"
-                  target="_blank"
+                  href="https://www.instagram.com/carestics_decor"
+                   target="_blank"
                   rel="noreferrer"
                   aria-label="Instagram"
                   className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
@@ -562,7 +564,7 @@ export default function Home() {
 
                 {/* TikTok */}
                 <a
-                  href="https://tiktok.com"
+                  href="https://www.tiktok.com/@carestics"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="TikTok"
@@ -573,18 +575,7 @@ export default function Home() {
                   </svg>
                 </a>
 
-                {/* YouTube */}
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="YouTube"
-                  className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all cursor-pointer"
-                >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                  </svg>
-                </a>
+                
               </div>
             </div>
 
@@ -605,16 +596,16 @@ export default function Home() {
               <ul className="space-y-4 text-neutral-400">
                 <li><Link href="shipping-and-returns" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
                 {/* <li><Link href="#" className="hover:text-indigo-400 transition-colors">FAQ</Link></li> */}
-                <li>
-                  <a
-                    href={`https://wa.me/923359528726?text=${encodeURIComponent("Hello! I need some help regarding my order.")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-indigo-400 transition-colors"
-                  >
-                    Contact Us
-                  </a>
-                </li>
+             <li>
+  <a 
+    href={`https://wa.me/923359528726?text=${encodeURIComponent("Hello! I need some help regarding my order.")}`} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="hover:text-indigo-400 transition-colors"
+  >
+    Contact Us
+  </a>
+</li>
                 {/* <li><Link href="#" className="hover:text-indigo-400 transition-colors">Track Order</Link></li> */}
               </ul>
             </div>
